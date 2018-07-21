@@ -1,0 +1,7 @@
+{{ $error or ''}}
+<form action="{{route('status')}}" method="post">
+    <?php echo csrf_field(); ?>
+  username:  <input type="text" name="username" placeholder="username" ><br/>
+  password:  <input type="password" name="password" placeholder="password"><br/>
+    <input type="submit" value="login">
+</form>

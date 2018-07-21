@@ -11,31 +11,28 @@
 |
 */
 
-Route::get('/test', function () {
+Route::get('/', function () {
     return view('welcome');
 });
+Route::get('model/save', function(){
+    $user = new App\User();
+    $user->name = "tung";
+    $user->email = "ghicsvaf@gmail.com";
+    $user->password =bcrypt('123456');
 
-Route::resource('/student','StudentController');
-
-
-Route::get('database',function(){
-    Schema::create('producttype',function($table){
-        $table->increments('id');
-        $table->string('name',200);
-    });
-    echo "saved";
+    $user->save();
 });
 
-Route::get('linktables',function(){
-    Schema::create('product',function($table){
-        $table->increments('id');
-        $table->string('name');
-        $table->float('price');
-        $table->integer('number')->default(0);
-
-        $table->integer('id_producttype')->unsigned();
-        $table->foreign('id_producttype')->references('id')->on('producttype');
-        
-
-    });
+Route::get('dangnhap' , function(){
+    return view('loginform.dangnhap');
 });
+
+Route::post('status', 'AuthController@login')->name('status');
+
+Route::get('logout','AuthController@logout');
+
+Route::resource('/users','AuthController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
